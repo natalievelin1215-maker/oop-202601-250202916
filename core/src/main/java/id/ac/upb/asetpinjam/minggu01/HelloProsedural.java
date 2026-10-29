@@ -13,8 +13,8 @@ public final class HelloProsedural {
      * Contoh bentuk: "Hello Aset-Pinjam, saya Budi (2310112345)".
      */
     public static String sapa(String nama, String nim) {
-        throw new UnsupportedOperationException("TODO minggu 1: HelloProsedural.sapa");
-    }
+    return "Hallo Aset-Pinjam " + nama + " (" + nim + ")";
+}
 
     public static void main(String[] args) {
         Varian v = Varian.aktif();
