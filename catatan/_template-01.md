@@ -1,4 +1,5 @@
-# Catatan Minggu NN: (topik)
+# Catatan Minggu 01: hello oop
+
 
 Salin berkas ini menjadi `catatan/minggu-NN.md` (NN dua digit, misalnya `minggu-07.md`).
 
