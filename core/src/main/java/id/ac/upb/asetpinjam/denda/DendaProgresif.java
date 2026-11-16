@@ -10,6 +10,7 @@ import id.ac.upb.asetpinjam.model.Aset;
  * 0 hari = 0; tidak pernah lebih murah dari DendaFlat; tidak pernah turun saat hari bertambah;
  * pada hari ke-30 lebih mahal dari flat.
  */
+
 public class DendaProgresif implements AturanDenda {
 
     @Override

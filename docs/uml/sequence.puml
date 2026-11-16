@@ -1,0 +1,54 @@
+@startuml
+autonumber
+actor "Aktor / Peminjam" as Pengguna
+participant "Klien / Service" as Klien
+participant "baru: Peminjaman" as Peminjaman
+participant "jadwal: JadwalPeminjaman" as Jadwal
+participant "aset: Aset" as Aset
+participant "daftar: List<Peminjaman>" as Daftar
+
+Pengguna -> Klien: Ajukan peminjaman aset
+activate Klien
+
+Klien -> Peminjaman: new Peminjaman(id, peminjam, aset, mulai, selesai)
+activate Peminjaman
+Peminjaman --> Klien: baru (status = DIAJUKAN)
+deactivate Peminjaman
+
+Klien -> Jadwal: ajukan(baru)
+activate Jadwal
+
+Jadwal -> Peminjaman: getAset()
+activate Peminjaman
+Peminjaman --> Jadwal: aset
+deactivate Peminjaman
+
+Jadwal -> Aset: bisaDipinjam()
+activate Aset
+Aset --> Jadwal: true
+deactivate Aset
+
+Jadwal -> Jadwal: bentrok(baru)
+activate Jadwal
+note over Jadwal, Daftar: Memeriksa tumpang tindih waktu untuk aset yang sama
+Jadwal --> Jadwal: statusBentrok
+deactivate Jadwal
+
+alt Skenario Bentrok (statusBentrok == true)
+    note over Jadwal, Klien: Jadwal tumpang tindih pada aset yang sama
+    Jadwal --> Klien: throw PeminjamanBentrokException("Bentrok jadwal peminjaman")
+    Klien --> Pengguna: Notifikasi: Pengajuan ditolak (jadwal bentrok)
+else Skenario Sukses (statusBentrok == false)
+    note over Jadwal, Daftar: Jadwal aman dan tidak tumpang tindih
+    Jadwal -> Daftar: add(baru)
+    activate Daftar
+    Daftar --> Jadwal: void
+    deactivate Daftar
+
+    Jadwal --> Klien: return (sukses)
+    deactivate Jadwal
+
+    Klien --> Pengguna: Notifikasi: Pengajuan berhasil diajukan (status DIAJUKAN)
+end
+deactivate Klien
+@enduml
