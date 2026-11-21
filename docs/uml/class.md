@@ -2,11 +2,11 @@
 
 Berikut adalah diagram kelas UML yang merepresentasikan struktur aktual dari kode sumber sistem Aset-Pinjam. Diagram mencakup paket, kelas abstrak, antarmuka (*interface*), *enumeration*, atribut, method berserta tipe dan visibilitasnya, serta relasi (*inheritance*, *realization*, *aggregation*, dan *dependency*) beserta kardinalitasnya (*multiplicity*).
 
-```mermaid
+``` mermaid
 classDiagram
     direction TB
 
-    package id.ac.upb.asetpinjam.kontrak {
+    namespace id.ac.upb.asetpinjam.kontrak {
         class DapatDipinjam {
             <<interface>>
             +bisaDipinjam() boolean
@@ -18,7 +18,7 @@ classDiagram
         }
     }
 
-    package id.ac.upb.asetpinjam.model {
+    namespace id.ac.upb.asetpinjam.model {
         class StatusAset {
             <<enumeration>>
             TERSEDIA
@@ -73,8 +73,8 @@ classDiagram
             +setStatus(status: StatusAset) void
             +setKondisi(kondisi: Kondisi) void
             +bisaDipinjam() boolean
-            +getJenis()* JenisAset
-            +hitungDenda(hariTerlambat: int)* long
+            +getJenis() JenisAset*
+            +hitungDenda(hariTerlambat: int) long*
         }
 
         class Ruang {
@@ -133,7 +133,7 @@ classDiagram
         }
     }
 
-    package id.ac.upb.asetpinjam.denda {
+    namespace id.ac.upb.asetpinjam.denda {
         class DendaFlat {
             +hitung(aset: Aset, hariTerlambat: int) long
         }
@@ -143,7 +143,7 @@ classDiagram
         }
     }
 
-    package id.ac.upb.asetpinjam.katalog {
+    namespace id.ac.upb.asetpinjam.katalog {
         class KatalogAset {
             -List~Aset~ daftar
             +tambah(aset: Aset) void
@@ -153,7 +153,7 @@ classDiagram
         }
     }
 
-    package id.ac.upb.asetpinjam.jadwal {
+    namespace id.ac.upb.asetpinjam.jadwal {
         class JadwalPeminjaman {
             -List~Peminjaman~ daftar
             -int kuotaLaptop
@@ -163,7 +163,7 @@ classDiagram
             +tambah(p: Peminjaman) void
             +bentrok(baru: Peminjaman) boolean
             +semuaUrutMulai() List~Peminjaman~
-            +perAset() Map~String, List~Peminjaman~~
+            +perAset() Map~String, List~Peminjaman~ ~
             +hapus(id: String) boolean
             +ajukan(baru: Peminjaman) void
         }
